@@ -1,32 +1,22 @@
 require('./config/config')
 const express = require('express')
-const app = express()
+const mongoose = require('mongoose');
 
-const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+const app = express();
 
-app.get('/user', (req, res) => res.json('get user'))
-app.post('/user', (req, res) => {
-    let data = req.body;
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-    if (!data.name) {
-        res.status(400).json({
-            success: false,
-            message: 'name is required'
-        });
-    }
+app.use(require('./routes/user'));
 
-    res.json({ data });
-});
-
-app.put('/user:id', (req, res) => {
-    let id = req.params.id;
-    res.json({ id });
-});
-
-app.delete('/user', (req, res) => {
-    res.json('delete user');
+mongoose.connect(process.env.DB, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+}, (err, res) => {
+    if (err) throw err;
+    console.log('Database online');
 });
 
 app.listen(process.env.PORT, () => {
