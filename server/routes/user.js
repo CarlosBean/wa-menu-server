@@ -1,9 +1,11 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { verifyToken, verifyAdminRole } = require('../middlewares/auth');
+
 const app = express();
 
-app.get('/user', (req, res) => {
+app.get('/user', verifyToken, (req, res) => {
     const from = Number(req.query.from || 0);
     const limit = Number(req.query.limit || 5);
 
@@ -30,7 +32,7 @@ app.get('/user', (req, res) => {
         })
 });
 
-app.post('/user', (req, res) => {
+app.post('/user', [verifyToken, verifyAdminRole], (req, res) => {
     const body = req.body;
     const user = new User({
         name: body.name,
@@ -57,7 +59,7 @@ app.post('/user', (req, res) => {
     });
 });
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/:id', verifyToken, (req, res) => {
     const id = req.params.id;
     const body = req.body;
 
@@ -85,7 +87,7 @@ app.put('/user/:id', (req, res) => {
     });
 });
 
-app.delete('/user/:id', (req, res) => {
+app.delete('/user/:id', verifyToken, (req, res) => {
     const id = req.params.id;
 
     // User.findByIdAndRemove(id, (err, deletedUser) => {

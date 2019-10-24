@@ -8,7 +8,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(require('./routes/user'));
+// routes
+app.use(require('./routes'));
 
 mongoose.connect(process.env.DB, {
     useUnifiedTopology: true,
@@ -20,5 +21,5 @@ mongoose.connect(process.env.DB, {
 });
 
 app.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}!`)
+    console.log(`Listening on port ${process.env.PORT}`)
 });
