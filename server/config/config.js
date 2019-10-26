@@ -5,7 +5,7 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 //expiration time token
-process.env.EXP_TOKEN = 60 * 60 * 24;
+process.env.EXP_TOKEN = '48h';
 
 // auth seed token
 process.env.SEED = process.env.SEED || 'development-seed';
