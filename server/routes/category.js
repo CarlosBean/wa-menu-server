@@ -37,6 +37,14 @@ app.get('/category/:id', verifyToken, (req, res) => {
             })
         }
 
+        if (!foundCategory) {
+            return res.status(404).json({
+                success: false,
+                message: `category with id ${id} is not exist`,
+                err: { message: `category with id ${id} is not exist` }
+            })
+        }
+
         res.json({
             success: true,
             message: 'category obtained successfully',

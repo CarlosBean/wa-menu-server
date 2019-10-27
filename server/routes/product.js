@@ -73,6 +73,14 @@ app.get('/product/:id', verifyToken, (req, res) => {
                 })
             }
 
+            if (!foundProduct) {
+                return res.status(404).json({
+                    success: false,
+                    message: `product with id ${id} is not exist`,
+                    err: { message: `product with id ${id} is not exist` }
+                })
+            }
+
             res.json({
                 success: true,
                 message: 'product obtained successfully',
